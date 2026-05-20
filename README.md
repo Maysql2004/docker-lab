@@ -1,2 +1,2 @@
 # docker-lab
-Repositorio de Docker
+Curso CEP: Introducción a DevOps. Laboratorio Docker
