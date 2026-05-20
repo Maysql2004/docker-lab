@@ -1,0 +1,18 @@
+services:
+  writer:
+    image: debian
+    volumes:
+      - datos-log:/app/logs
+    command: sh -c "while true; do date >> /app/logs/log.txt; echo 'Timestamp guardado'; sleep 30; done"
+
+  reader:
+    image: debian
+    volumes:
+      - datos-log:/app/logs:ro
+    # Modificación: Espera a que el archivo exista antes de ejecutar el tail
+    command: sh -c "until [ -f /app/logs/log.txt ]; do echo 'Esperando a que se cree log.txt...'; sleep 1; done; tail -f /app/logs/log.txt"
+    depends_on:
+      - writer
+
+volumes:
+  datos-log:
